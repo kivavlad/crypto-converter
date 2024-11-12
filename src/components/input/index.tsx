@@ -3,7 +3,7 @@ import cls from "./style.module.scss";
 interface IProps {
   type: React.HTMLInputTypeAttribute;
   placeholder?: string;
-  error?: string | null;
+  error?: boolean;
   value: string;
   onChange: (value: string) => void;
 }

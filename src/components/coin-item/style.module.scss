@@ -1,0 +1,31 @@
+.coin_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.token {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--blue-gradient);
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+    overflow: hidden;
+  }
+
+  span {
+    font-weight: 600;
+  }
+}

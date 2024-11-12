@@ -14,8 +14,6 @@
 
   /* Gradients */
   --bg-gradient: radial-gradient(circle at 100% 0%, #2A1F47 0%, #050505 100%);
-  --bg-component-gradient: linear-gradient(84.75deg, #232323 0%, #313131 100%);
-
   --blue-gradient: linear-gradient(84.75deg, #6342BD 0%, #7553D8 100%);
   --black-gradient: linear-gradient(230.22deg, #313131 0%, #232323 100%);
 }
@@ -34,5 +32,4 @@ body {
 .container {
   max-width: 769px;
   margin: 0 auto;
-  padding: 0 8px;
 }
