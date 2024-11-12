@@ -1,0 +1,19 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: calc(100vh - 160px);
+  padding: 8px;
+  border-radius: 8px;
+  border: 2px solid #404040;
+  background: var(--black-gradient);
+  margin: 0 16px;
+}
+
+.item {
+  border-top: 1px solid rgba(245, 245, 245, 0.2);
+  
+  &:first-child {
+    border-top: none;
+  }
+}
