@@ -4,12 +4,20 @@ import { IRate, IRatesResponse } from "../types/rates-types";
 
 interface IState {
   list: IRate[];
+  currentRate: IRate;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: IState = {
   list: [],
+  currentRate: {
+    id: '',
+    symbol: '',
+    currencySymbol: '',
+    type: '',
+    rateUsd: '',
+  },
   loading: false,
   error: null,
 }
@@ -17,7 +25,11 @@ const initialState: IState = {
 const ratesSlice = createSlice({
   name: "rates",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentRate: (state, action: PayloadAction<IRate>) => {
+      state.currentRate = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(loadRates.pending, (state) => {

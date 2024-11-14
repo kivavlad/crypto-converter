@@ -1,0 +1,33 @@
+.overlay {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgb(5, 5, 5, 0.5);
+  z-index: 100;
+}
+
+.content {
+  max-width: 450px;
+  width: 100%;
+  height: 50vh;
+  border-bottom: 2px solid #404040;
+  border-radius: 16px 16px 0 0;
+  padding: 22px 16px;
+  background: var(--black-gradient);
+  animation: view .4s ease;
+}
+
+@keyframes view {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
