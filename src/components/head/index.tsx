@@ -11,15 +11,17 @@ interface IProps {
 export const Head: React.FC<IProps> = ({ title, onReload, onLogout }) => {
   return (
     <div className={cls.head}>
-      {onReload && (
-        <button onClick={onReload}>
-          <ReloadSvg/>
+      <div className={cls.content}>
+        {onReload && (
+          <button onClick={onReload}>
+            <ReloadSvg/>
+          </button>
+        )}
+        <h3>{title}</h3>
+        <button onClick={onLogout}>
+          <LogoutSvg/>
         </button>
-      )}
-      <h3>{title}</h3>
-      <button onClick={onLogout}>
-        <LogoutSvg/>
-      </button>
+      </div>
     </div>
   )
 }

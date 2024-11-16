@@ -1,50 +1,21 @@
-# React + TypeScript + Vite
+## Crypto Converter
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Запуск приложения локально
 
-Currently, two official plugins are available:
+* Перед запуском приложения необходимо установить все зависимости. Для этого выполните следующую команду:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ `npm install`
 
-## Expanding the ESLint configuration
+### Запуск приложения в режиме разработки
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+* Чтобы запустить приложение в режиме разработки, выполните следующую команду:
 
-- Configure the top-level `parserOptions` property like this:
+  `npm run dev`
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Авторизация
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+* Для авторизации в приложении используйте:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+  `demo`  // Login
+  
+  `demo`  // Password

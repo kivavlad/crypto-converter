@@ -8,6 +8,7 @@ import { Protected } from "../containers/protected";
 import { Layout } from "../containers/layout";
 import { Login } from "../pages/login";
 import { Rates } from "../pages/rates";
+import { Convert } from "../pages/convert";
 import { Widget } from "../containers/modals";
 
 export const App: React.FC = () => {
@@ -25,6 +26,7 @@ export const App: React.FC = () => {
         <Route path="/login" element={<Login/>}/>
         <Route path="/" element={<Protected redirect="/login"><Layout/></Protected>}>
           <Route index element={<Rates/>}/>
+          <Route path="/convert" element={<Convert/>}/>
         </Route>
       </Routes>
 

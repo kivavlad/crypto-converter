@@ -16,16 +16,14 @@ export const CoinItem: React.FC<IProps> = memo(({ item }) => {
     const currentPriceNum = parseFloat(price);
     const previousPriceNum = parseFloat(previousPrice);
 
-    if (currentPriceNum !== previousPriceNum) {
-      if (currentPriceNum < previousPriceNum) {
-        setPriceChangeClass(cls.red);
-      } else {
-        setPriceChangeClass(cls.green);
-      }
-
-      setPreviousPrice(price);
-      setTimeout(() => setPriceChangeClass(''), 1000);
+    if (currentPriceNum < previousPriceNum) {
+      setPriceChangeClass(cls.red);
+    } else {
+      setPriceChangeClass(cls.green);
     }
+
+    setPreviousPrice(price);
+    setTimeout(() => setPriceChangeClass(''), 800);
   }, [price, previousPrice])
 
   return (
@@ -35,7 +33,7 @@ export const CoinItem: React.FC<IProps> = memo(({ item }) => {
         <span>{item.symbol}</span>
       </div>
       <div className={cls.price}>
-        ${price}
+        ${Number(price || item.rateUsd).toFixed(18)}
       </div>
     </div>
   )
