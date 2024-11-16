@@ -27,36 +27,38 @@ export const ConvertForm: React.FC = () => {
   }
 
   const convert = useMemo(() => {
-    if (!fromValue || !toValue || !amount) {
-      return null;
-    }
-
-    if (!fromRate && !toRate) {
+    if (!fromValue || !toValue || !fromRate || !toRate || !amount || isNaN(Number(amount))) {
       return null;
     }
 
     if (fromValue === toValue) {
       setErrorSelect(true);
       return null;
+    } else {
+      setErrorSelect(false);
     }
 
     const commission = Big(0.03);
+    let convertedAmount;
     let resultWithCommission: string;
     let resultWithoutCommission: string;
     let commissionPercentage = commission.times(100).toString();
+
+    try {
+      convertedAmount = Big(amount).times(Big(fromPrice)).div(Big(toPrice));
+    } catch (error) {
+      return null;
+    }
     
-    const convertedAmount = Big(amount).times(Big(fromPrice)).div(Big(toPrice));
     const amountWithCommission = convertedAmount.times(Big(1).plus(commission));
 
-    if (toRate && toRate.type === 'crypto') {
+    if (toRate.type === 'crypto') {
       resultWithCommission = amountWithCommission.toFixed(18);
       resultWithoutCommission = convertedAmount.toFixed(18);
     } else {
       resultWithCommission = amountWithCommission.toFixed(2);
       resultWithoutCommission = convertedAmount.toFixed(2);
     }
-    
-    setErrorSelect(false);
 
     return {
       resultWithCommission,
