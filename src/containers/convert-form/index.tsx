@@ -22,7 +22,17 @@ export const ConvertForm: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const cleanedValue = value.replace(/[^0-9.]/g, '');
+    
+    let cleanedValue = value.replace(/[^0-9.]/g, '');
+    if (cleanedValue.startsWith('0') && cleanedValue.length > 1 && cleanedValue[1] !== '.') {
+      cleanedValue = '0.' + cleanedValue.slice(1);
+    }
+  
+    const parts = cleanedValue.split('.');
+    if (parts.length > 2) {
+      cleanedValue = parts[0] + '.' + parts.slice(1).join('');
+    }
+
     setAmount(cleanedValue);
   }
 
