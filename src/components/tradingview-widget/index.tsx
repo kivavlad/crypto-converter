@@ -29,8 +29,7 @@ export const TradingviewWidget: React.FC<IProps> = ({ currentSymbol }) => {
         locale: "en",
         backgroundColor: "rgba(0, 0, 0, 1)",
         hide_legend: true,
-        allow_symbol_change: false,
-        save_image: false,
+        allow_symbol_change: true,
         calendar: false,
         support_host: "https://www.tradingview.com",
       });

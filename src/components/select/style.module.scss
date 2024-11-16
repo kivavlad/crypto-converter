@@ -1,0 +1,37 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.select {
+  padding: 6px;
+  border-radius: 8px;
+  border: 2px solid var(--white);
+
+  &.big {
+    width: 100%;
+    border: 2px solid #404040;
+    background: rgba(235, 235, 235, 0.2);
+  }
+
+  &.small {
+    text-align: center;
+    width: auto;
+  }
+
+  &.error {
+    border: 1px solid var(--light-red);
+  }
+
+  option {
+    font-size: 14px;
+    font-size: 600;
+    color: #404040;
+  }
+}

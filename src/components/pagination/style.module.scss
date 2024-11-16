@@ -1,0 +1,30 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 2px solid var(--gray);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray);
+
+  &.active {
+    border: 2px solid var(--white);
+    color: var(--white);
+  }
+}
+
+.dots {
+  padding: 12px 6px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray);
+}

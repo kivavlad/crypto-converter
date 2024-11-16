@@ -15,7 +15,6 @@ const modalsSlice = createSlice({
   reducers: {
     open: (state, action: PayloadAction<ModalName>) => {
       state.currentModal = action.payload;
-      console.log(action.payload)
     },
     close: (state) => {
       state.currentModal = '';

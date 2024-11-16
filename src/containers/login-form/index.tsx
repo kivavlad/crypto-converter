@@ -36,27 +36,29 @@ export const LoginForm: React.FC = () => {
   }, [login, password])
 
   return (
-    <form className={cls.form} onSubmit={onSubmit}>
-      <h3>Welcome back!</h3>
-      <Input 
-        type='text' 
-        placeholder="Login" 
-        error={error}
-        value={login} 
-        onChange={setLogin} 
-      />
-      <Input 
-        type='password' 
-        placeholder="Password" 
-        error={error}
-        value={password} 
-        onChange={setPassword} 
-      />
-      <Button 
-        type='submit' 
-        title="Sign in" 
-        active={active}
-      />
-    </form>
+    <div className={cls.overlay}>
+      <form className={cls.form} onSubmit={onSubmit}>
+        <h3>Welcome back!</h3>
+        <Input 
+          type='text' 
+          placeholder="Login" 
+          error={error}
+          value={login} 
+          onChange={(e) => setLogin(e.target.value)} 
+        />
+        <Input 
+          type='password' 
+          placeholder="Password" 
+          error={error}
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+        />
+        <Button 
+          type='submit' 
+          title="Sign in" 
+          active={active}
+        />
+      </form>
+    </div>
   )
 }
