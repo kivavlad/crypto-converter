@@ -15,10 +15,10 @@ export const ConvertForm: React.FC = () => {
   const [amount, setAmount] = useState<string>('');
   const [errorSelect, setErrorSelect] = useState<boolean>(false); 
 
-  const fromRate = list.find(item => item.symbol === fromValue);
-  const toRate = list.find(item => item.symbol === toValue);
-  const { price: fromPrice } = useTokenPrice(fromRate?.id || '');
-  const { price: toPrice } = useTokenPrice(toRate?.id || '');
+  const fromRate = list.find(item => item.symbol === fromValue) || null;
+  const toRate = list.find(item => item.symbol === toValue) || null;
+  const { price: fromPrice } = useTokenPrice(fromRate?.id ?? '');
+  const { price: toPrice } = useTokenPrice(toRate?.id ?? '');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -27,7 +27,11 @@ export const ConvertForm: React.FC = () => {
   }
 
   const convert = useMemo(() => {
-    if (!fromRate || !toRate || !amount) {
+    if (!fromValue || !toValue || !amount) {
+      return null;
+    }
+
+    if (!fromRate && !toRate) {
       return null;
     }
 
@@ -44,7 +48,7 @@ export const ConvertForm: React.FC = () => {
     const convertedAmount = Big(amount).times(Big(fromPrice)).div(Big(toPrice));
     const amountWithCommission = convertedAmount.times(Big(1).plus(commission));
 
-    if (toRate.type === 'crypto') {
+    if (toRate && toRate.type === 'crypto') {
       resultWithCommission = amountWithCommission.toFixed(18);
       resultWithoutCommission = convertedAmount.toFixed(18);
     } else {
