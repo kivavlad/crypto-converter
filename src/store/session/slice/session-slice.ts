@@ -34,14 +34,6 @@ const sessionSlice = createSlice({
       }
     },
 
-    checkAuth: (state) => {
-      if (state.access !== '') {
-        state.isAuth = true;
-      } else {
-        state.isAuth = false;
-      }
-    },
-
     signOut: () => {
       localStorage.removeItem('access');
       return initialState;
