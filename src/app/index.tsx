@@ -14,12 +14,18 @@ export const App: React.FC = () => {
   return (
     <>
       <Routes>
+        <Route 
+          path="/" 
+          element={<Protected redirect="/login"><Layout/></Protected>}
+          children={
+            <>
+              <Route index element={<Rates/>}/>
+              <Route path="/convert" element={<Convert/>}/>
+            </>
+          }
+        />
         <Route path="/login" element={<Login/>}/>
-        <Route path="/" element={<Protected redirect="/login"><Layout/></Protected>}>
-          <Route index element={<Rates/>}/>
-          <Route path="/convert" element={<Convert/>}/>
-        </Route>
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
       {currentModal === 'widget' && <Widget />}
