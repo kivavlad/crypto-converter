@@ -1,5 +1,6 @@
 import { memo, useState, useEffect } from "react";
 import { useTokenPrice } from "../../hooks/use-token-price";
+import { formatPrice } from "../../utils/format-price";
 import { IRate } from "../../store/rates/types/rates-types";
 import cls from "./style.module.scss";
 
@@ -33,7 +34,7 @@ export const CoinItem: React.FC<IProps> = memo(({ item }) => {
         <span>{item.symbol}</span>
       </div>
       <div className={cls.price}>
-        ${Number(price || item.rateUsd).toFixed(18)}
+        ${formatPrice(Number(price || item.rateUsd))}
       </div>
     </div>
   )

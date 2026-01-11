@@ -8,9 +8,9 @@ import "./assets/styles/reset.scss"
 import "./assets/styles/normalize.scss"
 
 createRoot(document.getElementById('root')!).render(
-  <Provider store={store}>
-    <HashRouter>
+  <HashRouter>
+    <Provider store={store}>
       <App />
-    </HashRouter>
-  </Provider>
-)
+    </Provider>
+  </HashRouter>
+);

@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { useAppSelector } from "../../hooks/use-app-selector";
 import { useTokenPrice } from "../../hooks/use-token-price";
+import { formatPrice } from "../../utils/format-price";
 import { Select } from "../../components/select";
 import { Input } from "../../components/input";
 import { Arrows } from "../../components/svg/arrows";
@@ -62,13 +63,8 @@ export const ConvertForm: React.FC = () => {
     
     const amountWithCommission = convertedAmount.times(Big(1).plus(commission));
 
-    if (toRate.type === 'crypto') {
-      resultWithCommission = amountWithCommission.toFixed(18);
-      resultWithoutCommission = convertedAmount.toFixed(18);
-    } else {
-      resultWithCommission = amountWithCommission.toFixed(2);
-      resultWithoutCommission = convertedAmount.toFixed(2);
-    }
+    resultWithCommission = amountWithCommission.toFixed(2);
+    resultWithoutCommission = convertedAmount.toFixed(2);
 
     return {
       resultWithCommission,
@@ -109,12 +105,15 @@ export const ConvertForm: React.FC = () => {
         <div className={cls.result}>
           <h3>{amount} {fromValue}</h3>
           <Arrows/>
-          <h4>{convert.resultWithCommission} {toValue}</h4>
+          <h4>{formatPrice(+convert.resultWithCommission)} {toValue}</h4>
           <p>
-            ({convert.resultWithoutCommission} {toValue} + {convert.commissionPercentage}%)
+            (
+              {formatPrice(+convert.resultWithoutCommission)} {toValue} + 
+              {formatPrice(+convert.commissionPercentage)}%
+            )
           </p>
         </div>
       )}
     </div>
-  )
-}
+  );
+};

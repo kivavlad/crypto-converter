@@ -6,6 +6,6 @@ export const loadRates = createAsyncThunk<IRatesResponse, undefined>(
   "rates/loadRates",
   async function() {
     const response = await api.get('/rates');
-    return await response.data as IRatesResponse;
+    return await response.data;
   }
 )

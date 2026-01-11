@@ -1,7 +1,9 @@
-import { useEffect, useCallback, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { useAppDispatch } from "../../hooks/use-app-dispatch";
 import { useAppSelector } from "../../hooks/use-app-selector";
+import { useFilters } from '../../hooks/use-filters';
 import { loadRates } from "../../store/rates/services/load-rates";
 import { sessionActions } from "../../store/session/slice/session-slice";
 import { ratesActions } from "../../store/rates/slice/rates-slice";
@@ -15,48 +17,34 @@ import { Pagination } from "../../components/pagination";
 import { Spinner } from "../../components/spinner";
 import { List } from "../../components/list";
 import { CoinItem } from "../../components/coin-item";
+import { Input } from "../../components/input";
 import { IRate, SortOrder } from "../../store/rates/types/rates-types";
+import cls from "./style.module.scss";
 
+const sortOrders: SortOrder[] = ['asc', 'desc'];
+const limitOrders: string[] = ['10', '25', '50', '100'];
 
 export const Rates: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { list, total, loading } = useAppSelector(state => state.rates);
 
-  const sortOrders: SortOrder[] = ['asc', 'desc'];
-  const limitOrders = ['10', '25', '50', '100'];
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [fetching, setFetching] = useState<boolean>(true);
+  const { list, total, loading, fetching } =
+    useAppSelector((state) => state.rates);
 
-  const [page, setPage] = useState<number>(() => {
-    const params = searchParams.get('page');
-    return params ? Number(params) : 1;
-  })
-  const [limit, setLimit] = useState<string>(() => {
-    const params = searchParams.get('limit');
-    return params ? params : '10';
-  })
-  const [sort, setSort] = useState<SortOrder | string>(() => {
-    const params = searchParams.get('sort');
-    return params ? params : '';
-  })
+  const { page, limit, sort, search, setSearch, setPage, setLimit, setSort } =
+    useFilters();
 
-  const sortedList = sorted(list, {limit: Number(limit), page, sort});
-
-  useEffect(() => {
-    setSearchParams({page: String(page), limit, sort});
-  }, [page, limit, sort])
+  const sortedList = sorted(list, { limit: Number(limit), page, sort, search});
 
   useEffect(() => {
     if (fetching) {
       dispatch(loadRates());
-      setFetching(false);
     }
   }, [fetching])
 
   const callbacks = {
     onReload: () => {
-      setFetching(true);
+      dispatch(ratesActions.setFetching(true));
     },
     onLogout: () => {
       dispatch(sessionActions.signOut());
@@ -102,11 +90,19 @@ export const Rates: React.FC = () => {
         />
       </NavMenu>
       <Spinner active={loading}>
-        <List 
-          list={sortedList} 
-          renderItems={renders.item}
-          onSelect={callbacks.onSelect}
-        />
+        <div className={cls.wrapper}>
+          <Input
+            type="search"
+            value={search}
+            placeholder="Search coins"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <List 
+            list={sortedList} 
+            renderItems={renders.item}
+            onSelect={callbacks.onSelect}
+          />
+        </div>
       </Spinner>
     </div>
   )

@@ -4,14 +4,23 @@ interface IParams {
   limit: number;
   page: number;
   sort?: SortOrder | string;
+  search?: string;
 }
 
-export const sorted = (items: IRate[], {limit, page, sort}: IParams): IRate[] => {
+export const sorted = (items: IRate[], params: IParams): IRate[] => {
+  const {limit, page, sort, search} = params;
+  const filteredItems = search
+    ? items.filter(item =>
+        item.id?.toLowerCase().includes(search.toLowerCase()) ||
+        item.symbol?.toLowerCase().includes(search.toLowerCase())
+      )
+    : items;
+
   const sortedItems = sort === 'asc' 
-    ? [...items].sort((a, b) => Number(a.rateUsd) - Number(b.rateUsd)) 
+    ? [...filteredItems].sort((a, b) => Number(a.rateUsd) - Number(b.rateUsd)) 
     : sort === 'desc' 
-      ? [...items].sort((a, b) => Number(b.rateUsd) - Number(a.rateUsd)) 
-      : items;
+      ? [...filteredItems].sort((a, b) => Number(b.rateUsd) - Number(a.rateUsd)) 
+      : filteredItems;
 
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;

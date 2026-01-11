@@ -1,17 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadRates } from "../services/load-rates";
-import { IRate, IRatesResponse } from "../types/rates-types";
+import type { IRatesState, IRate } from "../types/rates-types";
 
-interface IState {
-  list: IRate[];
-  symbols: string[];
-  total: number;
-  currentRate: IRate;
-  loading: boolean;
-  error: string | null;
-}
-
-const initialState: IState = {
+const initialState: IRatesState = {
   list: [],
   symbols: [],
   total: 0,
@@ -23,6 +14,7 @@ const initialState: IState = {
     rateUsd: '',
   },
   loading: false,
+  fetching: true,
   error: null,
 }
 
@@ -33,6 +25,9 @@ const ratesSlice = createSlice({
     setCurrentRate: (state, action: PayloadAction<IRate>) => {
       state.currentRate = action.payload;
     },
+    setFetching: (state, action: PayloadAction<boolean>) => {
+      state.fetching = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -40,9 +35,10 @@ const ratesSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(loadRates.fulfilled, (state, action: PayloadAction<IRatesResponse>) => {
+      .addCase(loadRates.fulfilled, (state, action) => {
         const data = action.payload.data ?? [];
         state.loading = false;
+        state.fetching = false;
         state.error = null;
 
         if (data.length) {
@@ -53,6 +49,7 @@ const ratesSlice = createSlice({
       })
       .addCase(loadRates.rejected, (state, action) => {
         state.loading = false;
+        state.fetching = false;
         state.error = action.error.message ?? 'Error load rates';
       })
   },
