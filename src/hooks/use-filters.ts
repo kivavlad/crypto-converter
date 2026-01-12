@@ -23,7 +23,7 @@ export const useFilters = ({
     const defaults: FiltersState = {
       page: 1,
       limit: '10',
-      sort: 'desc',
+      sort: 'asc',
       search: ''
     };
 

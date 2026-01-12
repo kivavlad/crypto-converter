@@ -4,7 +4,7 @@ import { useAppSelector } from "../hooks/use-app-selector";
 import { Protected } from "../containers/protected";
 import { Layout } from "../containers/layout";
 import { Login } from "../pages/login";
-import { Rates } from "../pages/rates";
+import { Tokens } from "../pages/tokens";
 import { Convert } from "../pages/convert";
 import { Widget } from "../containers/modals";
 
@@ -19,7 +19,7 @@ export const App: React.FC = () => {
           element={<Protected redirect="/login"><Layout/></Protected>}
           children={
             <>
-              <Route index element={<Rates/>}/>
+              <Route index element={<Tokens/>}/>
               <Route path="/convert" element={<Convert/>}/>
             </>
           }

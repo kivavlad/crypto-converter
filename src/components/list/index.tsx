@@ -1,14 +1,14 @@
-import { memo } from "react";
-import { IRate } from "../../store/rates/types/rates-types";
+import { memo, ReactElement } from "react";
 import cls from "./style.module.scss";
 
-interface IProps {
-  list: IRate[];
-  renderItems: (item: IRate) => React.ReactNode;
-  onSelect: (item: IRate) => void;
+interface IProps<T> {
+  list: T[];
+  renderItems: (item: T) => React.ReactNode;
+  onSelect: (item: T) => void;
 }
 
-export const List: React.FC<IProps> = memo(({ list, renderItems, onSelect }) => {
+export const List = memo(<T extends { id: string }>(
+  { list, renderItems, onSelect }: IProps<T>) => {
   if (!list.length) return null;
 
   return (
@@ -24,4 +24,4 @@ export const List: React.FC<IProps> = memo(({ list, renderItems, onSelect }) => 
       ))}
     </div>
   )
-})
+}) as <T extends { id: string }>(props: IProps<T>) => ReactElement;

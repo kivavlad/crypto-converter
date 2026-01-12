@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react";
 import api from "../config/api";
-import { IRate } from "../store/rates/types/rates-types";
+import { IToken } from "../store/tokens/types";
 
-interface IRateData {
-  data: IRate;
-  timestamp: number;
+interface IParams {
+  _id: string,
+  delay?: number
 }
 
-export const useTokenPrice = (_id: string) => {
+interface IResult {
+  timestamp: number;
+  data: IToken;
+}
+
+export const useTokenPrice = ({
+  _id,
+  delay = 32000
+}: IParams) => {
   const [price, setPrice] = useState<string>('');
 
-  const getTokenPrice = async (_id: string) => {
-    const response = await api.get(`/rates/${_id}`);
-    return await response.data as IRateData;
+  const getTokenPrice = async (_id: string): Promise<IResult> => {
+    const response = await api.get(`/assets/${_id}`);
+    return await response.data;
   }
 
   useEffect(() => {
@@ -20,17 +28,17 @@ export const useTokenPrice = (_id: string) => {
       const fetchPrice = async () => {
         try {
           const response = await getTokenPrice(_id);
-          setPrice(response.data.rateUsd);
+          setPrice(response.data.priceUsd);
         } catch (error) {
           console.error(error);
         }
       }
 
       fetchPrice();
-      const interval = setInterval(fetchPrice, 32000);
+      const interval = setInterval(fetchPrice, delay);
       return () => clearInterval(interval);
     }
-  }, [_id])
+  }, [_id, delay]);
 
   return {
     price,

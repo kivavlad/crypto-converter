@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import cls from "./style.module.scss";
 
 interface IProps {
@@ -6,7 +7,7 @@ interface IProps {
 }
 
 export const Overlay: React.FC<IProps> = ({ children, onClose }) => {
-  return (
+  return createPortal(
     <div className={cls.overlay} 
       onClick={onClose}
     >
@@ -15,6 +16,7 @@ export const Overlay: React.FC<IProps> = ({ children, onClose }) => {
       >
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
