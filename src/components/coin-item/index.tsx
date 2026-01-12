@@ -1,15 +1,15 @@
 import { memo, useState, useEffect } from "react";
 import { useTokenPrice } from "../../hooks/use-token-price";
 import { formatPrice } from "../../utils/format-price";
-import { IRate } from "../../store/rates/types/rates-types";
+import type { IToken } from "../../store/tokens/types";
 import cls from "./style.module.scss";
 
 interface IProps {
-  item: IRate;
+  item: IToken;
 }
 
 export const CoinItem: React.FC<IProps> = memo(({ item }) => {
-  const { price } = useTokenPrice(item.id);
+  const { price } = useTokenPrice({ _id: item.id });
   const [previousPrice, setPreviousPrice] = useState<string>(price);
   const [priceChangeClass, setPriceChangeClass] = useState<string>('');
 
@@ -28,13 +28,13 @@ export const CoinItem: React.FC<IProps> = memo(({ item }) => {
   }, [price, previousPrice])
 
   return (
-    <div className={`${cls.coin_wrap} ${priceChangeClass || ''}`}>
+    <div className={`${cls.coin_wrap} ${priceChangeClass}`}>
       <div className={cls.token}>
-        <div className={cls.logo}>{item.currencySymbol ?? ''}</div>
-        <span>{item.symbol}</span>
+        <div className={cls.logo}>{item.symbol}</div>
+        <span>{item.name}</span>
       </div>
       <div className={cls.price}>
-        ${formatPrice(Number(price || item.rateUsd))}
+        ${formatPrice(Number(price || item.priceUsd))}
       </div>
     </div>
   )

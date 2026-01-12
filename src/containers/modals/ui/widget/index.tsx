@@ -6,15 +6,17 @@ import { TradingviewWidget } from "../../../../components/tradingview-widget";
 
 export const Widget: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { currentRate } = useAppSelector(state => state.rates);
+  const { selected } = useAppSelector(state => state.tokens);
 
   const callbacks = {
     onClose: () => dispatch(modalsActions.close()),
   }
 
+  if (!selected) return null;
+
   return (
     <Overlay onClose={callbacks.onClose}>
-      <TradingviewWidget currentSymbol={currentRate.symbol}/>
+      <TradingviewWidget currentSymbol={selected.symbol}/>
     </Overlay>
   )
 }

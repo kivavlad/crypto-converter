@@ -1,26 +1,20 @@
-import { IRate, SortOrder } from "../store/rates/types/rates-types";
+import { SortOrder } from "../store/rates/types/rates-types";
+import { IToken } from "../store/tokens/types";
 
 interface IParams {
   limit: number;
   page: number;
   sort?: SortOrder | string;
-  search?: string;
 }
 
-export const sorted = (items: IRate[], params: IParams): IRate[] => {
-  const {limit, page, sort, search} = params;
-  const filteredItems = search
-    ? items.filter(item =>
-        item.id?.toLowerCase().includes(search.toLowerCase()) ||
-        item.symbol?.toLowerCase().includes(search.toLowerCase())
-      )
-    : items;
+export const sorted = (items: IToken[], params: IParams): IToken[] => {
+  const {limit, page, sort} = params;
 
   const sortedItems = sort === 'asc' 
-    ? [...filteredItems].sort((a, b) => Number(a.rateUsd) - Number(b.rateUsd)) 
+    ? [...items].sort((a, b) => Number(a.rank) - Number(b.rank)) 
     : sort === 'desc' 
-      ? [...filteredItems].sort((a, b) => Number(b.rateUsd) - Number(a.rateUsd)) 
-      : filteredItems;
+      ? [...items].sort((a, b) => Number(b.rank) - Number(a.rank)) 
+      : items;
 
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
