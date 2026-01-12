@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useAppSelector } from "../../hooks/use-app-selector";
 import { useTokenPrice } from "../../hooks/use-token-price";
 import { formatPrice } from "../../utils/format-price";
@@ -16,12 +16,13 @@ export const ConvertForm: React.FC = () => {
   const [amount, setAmount] = useState<string>('');
   const [errorSelect, setErrorSelect] = useState<boolean>(false); 
 
-  const fromRate = list.find(item => item.symbol === fromValue) || null;
-  const toRate = list.find(item => item.symbol === toValue) || null;
-  const { price: fromPrice } = useTokenPrice(fromRate?.id ?? '');
-  const { price: toPrice } = useTokenPrice(toRate?.id ?? '');
+  const fromRate = list.find((item) => item.symbol === fromValue);
+  const toRate = list.find((item) => item.symbol === toValue);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { price: fromPrice } = useTokenPrice({ _id: fromRate?.id! });
+  const { price: toPrice } = useTokenPrice({ _id: toRate?.id! });
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     
     let cleanedValue = value.replace(/[^0-9.]/g, '');
@@ -35,7 +36,7 @@ export const ConvertForm: React.FC = () => {
     }
 
     setAmount(cleanedValue);
-  }
+  }, [setAmount]);
 
   const convert = useMemo(() => {
     if (!fromValue || !toValue || !fromRate || !toRate || !amount || isNaN(Number(amount))) {
